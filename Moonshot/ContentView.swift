@@ -10,6 +10,7 @@ import SwiftUI
 
 // Resizing images to fit the available space
 // How ScrollView lets us work with scrolling data
+// Pushing new views onto the stack using NavigationLink
 
 /*
 struct ContentView: View {
@@ -56,6 +57,7 @@ struct ContentView: View {
 }
  */
 
+/*
 struct CustomText: View {
     let text: String
     
@@ -109,6 +111,68 @@ struct ContentView: View {
         }
     }
 }
+
+*/
+
+// SwiftUI's navigation stack
+// - shows a navigation bar at the top of our views
+// - it also lets us push views onto a VStack
+// One of the most fundamental ways of navigation
+// Very different from sheets - the difference
+//   is in the way they show views
+// A sheet is for unrelated content
+// A navigation link is for related
+//   (perhaps more detail) information
+// We can use navigation link
+//   with any kind of destination view
+// If you want to link to something other
+//  than an simple Text label,
+//  you can provide two trailing closures
+//  with your navigation link
+/*
+struct ContentView: View {
+    var body: some View {
+        NavigationStack {
+            // Simple navigation link
+            // NavigationLink("Tap me") {
+            // Navigation link with two trailing closures
+            //   with a custom label link
+            NavigationLink {
+                Text("Detail View")
+            } label: {
+                VStack {
+                    // This whole thing becomes
+                    // our tappable button
+                    Text("This is the label")
+                    Text("So is this")
+                    Image(systemName: "face.smiling")
+                }
+                .font(.largeTitle)
+            }
+            .navigationTitle("SwiftUI")
+        }
+    }
+}
+ */
+// IMPORTANT: The most common application of navigation links
+//   is inside a list
+// List will include small ">" symbol with each item
+//   to tell users this row can be tapped
+//   to see related information
+struct ContentView: View {
+    var body: some View {
+        NavigationStack {
+            List(0..<100) { row in
+                NavigationLink("Row \(row)") {
+                    Text("Detail \(row)")
+                }
+            }
+            .navigationTitle("SwiftUI")
+        }
+    }
+}
+
+
 
 #Preview {
     ContentView()
