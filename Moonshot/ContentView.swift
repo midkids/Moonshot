@@ -11,6 +11,7 @@ import SwiftUI
 // Resizing images to fit the available space
 // How ScrollView lets us work with scrolling data
 // Pushing new views onto the stack using NavigationLink
+// Working with hierarchical Codable data
 
 /*
 struct ContentView: View {
@@ -75,23 +76,20 @@ struct CustomText: View {
 
 struct ContentView: View {
     var body: some View {
-        // ScrollViews and scroll
-        // horizontally and vertically
-        // or in both directions at the same time
-        // Can show scroll indicator
-        // When we place views inside ScrollView,
-        // it automatically determines
-        // the size of its content
-        // It respects the safe area automatically
-        //   just like lists and forms
-        // In this case,
-        // it starts directly below the dynamic island
-        // When we add a view inside a ScrollView,
-        //   they are added immediately upon start up
-        //   if we use VStack
-        // To avoid that, we will change our VStack to
-        //   a lazy VStack which will only make the
-        //   views on the screen
+// ScrollViews and scroll horizontally and vertically
+// or in both directions at the same time
+// Can show scroll indicator
+// When we place views inside ScrollView,
+// it automatically determines the size of its content
+// It respects the safe area automatically
+//   just like lists and forms
+// In this case, it starts directly below the dynamic island
+// When we add a view inside a ScrollView,
+//   they are added immediately upon start up
+//   if we use VStack
+// To avoid that, we will change our VStack to
+//   a lazy VStack which will only make the
+//   views on the screen
         ScrollView {
             // VStack(spacing: 10) {
             // A LazyVStack will always take up as much
@@ -154,6 +152,7 @@ struct ContentView: View {
     }
 }
  */
+/*
 // IMPORTANT: The most common application of navigation links
 //   is inside a list
 // List will include small ">" symbol with each item
@@ -168,6 +167,53 @@ struct ContentView: View {
                 }
             }
             .navigationTitle("SwiftUI")
+        }
+    }
+}
+*/
+
+// The Codeable protocol makes it easy to decode
+// flat data (e.g. a single instance of a type, or
+// an array dictionary of that type
+// However, in this project we will be using
+// an array inside another array using
+// different data types
+// If you want to decode this type of hierarchical
+// data, the key is to create a separate type for
+// each level you want to decode
+// Here we will have two levels,
+//   but there is no limit to the number of levels
+struct User: Codable {
+    let name: String
+    let address: Address
+}
+struct Address: Codable {
+    let street: String
+    let city: String
+}
+
+struct ContentView: View {
+    var body: some View {
+        Button("Decode JSON") {
+            // Here we make some JSON as a mult-line
+            // string directly in our SwiftUI code
+            // This is only for testing, not real life
+            // The string is in the form of a dictionary
+            let input = """
+                {
+                    "name": "Taylor Swift",
+                    "address": {
+                    "street": "555 Taylor Swift Avenue",
+                    "city": "Nashville"
+                    }
+                }
+                """
+            // Convert our JSON string to a data type
+            let data = Data(input.utf8)
+            let decoder = JSONDecoder()
+            if let user = try? decoder.decode(User.self, from: data) {
+                print(user.address.street)
+            }
         }
     }
 }
