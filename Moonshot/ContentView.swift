@@ -12,6 +12,7 @@ import SwiftUI
 // How ScrollView lets us work with scrolling data
 // Pushing new views onto the stack using NavigationLink
 // Working with hierarchical Codable data
+// How to lay out views in a scrolling grid
 
 /*
 struct ContentView: View {
@@ -172,6 +173,7 @@ struct ContentView: View {
 }
 */
 
+/*
 // The Codeable protocol makes it easy to decode
 // flat data (e.g. a single instance of a type, or
 // an array dictionary of that type
@@ -217,6 +219,70 @@ struct ContentView: View {
         }
     }
 }
+*/
+
+/*
+// Sometimes you want columns of data with a
+// grid of information that can adapt
+// for larger screens
+// We will use lazyHgrid and lazyVGrid for this
+// IMPORTANT: lazy means SwiftUI will wait until
+//   the data is being shown on the screen
+//   to load the view
+// This feature allows us to display a lot more data
+//   without using a lot of resources unnecessarily
+// There are two steps:
+// 1) define the rows OR columns) not both
+// 2) place our grid inside a scroll view
+// Here we will have vertical scrolling grid
+//   with three columns exactly 80 points wide
+// Each item you assign in this grid is given a column
+// In this case, column 1, column 2, column 3,
+//   Next line - column 1, column 2, column 3...
+struct ContentView: View {
+    let layout = [
+ //       GridItem(.fixed(80)),
+ //       GridItem(.fixed(80)),
+ //       GridItem(.fixed(80))
+        // SwiftUI will fit as many columns as possible
+        //   with each column being at least 80 points
+        // This allows more columns for larger screens
+        // Now we get four columns of 80 points each
+        //  in portrait orientation and eight columns
+        //  of 80 points each in landscape orientation
+        // IMPORTANT: this is much better choice
+        GridItem(.adaptive(minimum: 80, maximum: 120))
+    ]
+    var body: some View {
+        ScrollView {
+            LazyVGrid(columns: layout) {
+                ForEach(0..<1000) {
+                    Text("Item \($0)")
+                }
+            }
+        }
+        
+    }
+}
+*/
+// Horizontal Grid
+struct ContentView: View {
+    let layout = [
+        GridItem(.adaptive(minimum: 80, maximum: 120))
+    ]
+    var body: some View {
+        ScrollView(.horizontal) {
+            LazyHGrid(rows: layout) {
+                ForEach(0..<1000) {
+                    Text("Item \($0)")
+                }
+            }
+        }
+        
+    }
+}
+
+
 
 
 
