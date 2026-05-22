@@ -13,6 +13,7 @@ import SwiftUI
 // Pushing new views onto the stack using NavigationLink
 // Working with hierarchical Codable data
 // How to lay out views in a scrolling grid
+//  Loading a specific kind of Codable data
 
 /*
 struct ContentView: View {
@@ -265,6 +266,8 @@ struct ContentView: View {
     }
 }
 */
+
+/*
 // Horizontal Grid
 struct ContentView: View {
     let layout = [
@@ -281,10 +284,18 @@ struct ContentView: View {
         
     }
 }
+ */
 
-
-
-
+// Horizontal Grid
+struct ContentView: View {
+    // Here we use our Bundle-Decodeable extension
+    let astronauts = Bundle.main.decode("astronauts.json")
+    var body: some View {
+        // We will test to make sure our JSON astronauts file
+        // was loaded correctly by displaying its count
+        Text(String(astronauts.count))
+    }
+}
 
 #Preview {
     ContentView()
