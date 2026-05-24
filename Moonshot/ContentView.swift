@@ -15,6 +15,7 @@ import SwiftUI
 // How to lay out views in a scrolling grid
 // Loading a specific kind of Codable data
 // Using generics to load any kind of Codable data
+// Formatting our mission view
 
 /*
 struct ContentView: View {
@@ -304,10 +305,49 @@ struct ContentView: View {
     // found in our Decode-Bundle extension to decode
     // missions
     let missions: [Mission] = Bundle.main.decode("missions.json")
+    
+    // Adaptive column layout
+    // It will have the right number of rows and columns
+    //   for our screen size
+    let columns = [
+        GridItem(.adaptive(minimum: 150))
+    ]
     var body: some View {
         // We will test to make sure our JSON astronauts file
         // was loaded correctly by displaying its count
-        Text(String(astronauts.count))
+        // Text(String(astronauts.count))
+        NavigationStack {
+            ScrollView {
+                LazyVGrid(columns: columns) {
+                    ForEach(missions) { mission in
+                        NavigationLink {
+                            Text("Detail view")
+                        } label: {
+                            VStack {
+                                // keeps the correct aspect ratio
+                                // no matter what size they are
+                                Image(mission.image)
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 100, height: 100)
+                            }
+                            VStack {
+                                Text(mission.displayName)
+                                    .font(.headline)
+                                // We will format date in Mission struct once
+                                // formatting the optional launchDate
+                                // to a String
+                                // Text(mission.launchDate ?? "N/A")
+                                Text(mission.formattedLaunchDate)
+                                    .font(.caption)
+                            }
+                            .frame(maxWidth: .infinity)
+                        }
+                    }
+                }
+            }
+            .navigationTitle("Moonshot")
+        }
     }
 }
 

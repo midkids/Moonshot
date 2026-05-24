@@ -37,6 +37,18 @@ extension Bundle {
             fatalError("Failed to load \(file) from bundle.")
         }
         let decoder = JSONDecoder()
+        let formatter = DateFormatter()
+        // The y indicates the year is in its natual four digit format
+        // The MM indicates the month is always two digits (e.g. 01)
+        // IMPORTANT: Do not use mm for month, mm stands for minutes
+        // The dd indicates the day is always two digits (e.g. 07)
+        // These two statements tell our decoder how to decode
+        //   any date it finds
+        // Usually it is a good idea to specify timezone
+        // But since were are displaying U.S. dates in the U.S
+        //   there is no need to do so here
+        formatter.dateFormat = "y-MM-dd"
+        decoder.dateDecodingStrategy = .formatted(formatter)
         
         //guard let loaded = try? decoder.decode([String: Astronaut].self, from: data) else {
         //    fatalError("Failed to decode \(file) from bundle.")

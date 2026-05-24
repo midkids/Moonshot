@@ -29,7 +29,25 @@ struct Mission: Codable, Identifiable {
         let role: String
     }
     let id: Int
-    let launchDate: String?
+    // Once we created our date decoder
+    //  in Bundle-Coder, we can change
+    //  launchDate to an optional Date
+    // let launchDate: String?
+    let launchDate: Date?
     let crew: [CrewRole]
     let description: String
+    
+    var displayName: String {
+        "Apollo \(id)"
+    }
+    var image: String {
+        // all lower case with no space
+        // to match the image name
+        "apollo\(id)"
+    }
+    // format optional launchDate to a String
+    //  in a much more natural format
+    var formattedLaunchDate: String {
+        launchDate?.formatted(date: .abbreviated, time: .omitted) ?? "N/A"
+    }
 }
