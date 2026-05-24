@@ -13,7 +13,8 @@ import SwiftUI
 // Pushing new views onto the stack using NavigationLink
 // Working with hierarchical Codable data
 // How to lay out views in a scrolling grid
-//  Loading a specific kind of Codable data
+// Loading a specific kind of Codable data
+// Using generics to load any kind of Codable data
 
 /*
 struct ContentView: View {
@@ -289,7 +290,20 @@ struct ContentView: View {
 // Horizontal Grid
 struct ContentView: View {
     // Here we use our Bundle-Decodeable extension
-    let astronauts = Bundle.main.decode("astronauts.json")
+    // Once we made our Bundle-Decodable generic
+    //  we must assure Swift we are returning a dictionary of
+    //  Astronauts for which we are using the generic "T"
+    //  in our Bundle-Decoder
+    // Don't forget,our Bundle-Decoder can not return any
+    //  type that conforms to Codable
+    // To fix this error, we will use a type annotation
+    //  so that Swift will know exactly what type it will be
+//    let astronauts = Bundle.main.decode("astronauts.json")
+    let astronauts: [String: Astronaut] = Bundle.main.decode("astronauts.json")
+    // We will use the very same decode method
+    // found in our Decode-Bundle extension to decode
+    // missions
+    let missions: [Mission] = Bundle.main.decode("missions.json")
     var body: some View {
         // We will test to make sure our JSON astronauts file
         // was loaded correctly by displaying its count

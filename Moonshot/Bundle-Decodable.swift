@@ -15,9 +15,21 @@ import Foundation
 //  in the future in other programs
 // We will add extra code to help use diagnose problems
 //  in case our SwiftUI code and our JSON file do not match up
+//
+// We will turn Bundle-Decoable from Astronaut specific
+//  to a generic bundle decoder, able to decode both
+//  a dictionary of Astronauts and arrays of Missions
+// and potentially lots of other objects
 
 extension Bundle {
-    func decode(_ file: String) -> [String: Astronaut] {
+    // func decode(_ file: String) -> [String: Astronaut] {
+    // The angle brackets make it generic
+    // "T" cold have been anything
+    // "T" is used by convention to stand for type of something
+    // Now we replace [String" Astronaut] with T
+    // We add the constraint of Codeable to assure Swift whatever
+    //  type T turns out to be will meet the Codeable protocol
+    func decode<T: Codable>(_ file: String) -> T {
         guard let url = self.url(forResource: file, withExtension: nil) else {
             fatalError("Failed to locate \(file) in bundle.")
         }
@@ -31,7 +43,8 @@ extension Bundle {
         // }
         // return loaded
         do {
-            return try decoder.decode([String: Astronaut].self, from: data)
+            // return try decoder.decode([String: Astronaut].self, from: data)
+            return try decoder.decode(T.self, from: data)
         } catch DecodingError.keyNotFound(let key, let context) {
             fatalError("Failed to decode \(file) from bundle due to a missing key '\(key.stringValue)' - \(context.debugDescription)")
         } catch DecodingError.typeMismatch(_, let context) {
