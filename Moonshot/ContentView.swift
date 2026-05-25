@@ -330,23 +330,41 @@ struct ContentView: View {
                                     .resizable()
                                     .scaledToFit()
                                     .frame(width: 100, height: 100)
+                                    // add padding to get badges
+                                    // away from edges
+                                    // must be after frame
+                                    .padding()
+                                
+                                VStack {
+                                    Text(mission.displayName)
+                                        .font(.headline)
+                                    // We will format date in Mission struct once
+                                    // formatting the optional launchDate
+                                    // to a String
+                                    // Text(mission.launchDate ?? "N/A")
+                                    Text(mission.formattedLaunchDate)
+                                        .font(.caption)
+                                }
+                                .padding(.vertical)
+                                .frame(maxWidth: .infinity)
+                                .background(.lightBackground)
                             }
-                            VStack {
-                                Text(mission.displayName)
-                                    .font(.headline)
-                                // We will format date in Mission struct once
-                                // formatting the optional launchDate
-                                // to a String
-                                // Text(mission.launchDate ?? "N/A")
-                                Text(mission.formattedLaunchDate)
-                                    .font(.caption)
-                            }
-                            .frame(maxWidth: .infinity)
+                            .clipShape(.rect(cornerRadius: 10))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 10)
+                                    .stroke(.lightBackground)
+                            )
                         }
                     }
                 }
+                // add padding to the lazy grid
+                // to get grid items away from sides
+                // and the bottom
+                // pushing the content in sligtly
+                .padding([.horizontal, .bottom])
             }
             .navigationTitle("Moonshot")
+            .background(.darkBackground)
         }
     }
 }

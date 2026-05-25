@@ -46,7 +46,9 @@ struct Mission: Codable, Identifiable {
         "apollo\(id)"
     }
     // format optional launchDate to a String
+    // and since it is optional, give it a default if not present
     //  in a much more natural format
+    // It will create an abbreviated date per the user's preferences
     var formattedLaunchDate: String {
         launchDate?.formatted(date: .abbreviated, time: .omitted) ?? "N/A"
     }
