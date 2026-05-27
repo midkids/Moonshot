@@ -16,6 +16,8 @@ import SwiftUI
 // Loading a specific kind of Codable data
 // Using generics to load any kind of Codable data
 // Formatting our mission view
+// Showing mission details with ScrollView
+//   and containerRelativeFrame()
 
 /*
 struct ContentView: View {
