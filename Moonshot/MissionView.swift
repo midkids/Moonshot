@@ -32,7 +32,7 @@ struct MissionView: View {
     // role + astronaut from
     // both JSON files
     // We will loop over all the missions
-    // and all its astronauts we can
+    // and all its astronauts so we can
     // populate this array with all the
     // unique crews
     let crew: [CrewMember]
@@ -50,10 +50,22 @@ struct MissionView: View {
                     .containerRelativeFrame(.horizontal) {
                         containerWidth,axis in containerWidth * 0.6
                 }
+                
+                
                 // The text Mission Highlights
                 // and the mission description
                 // will align to the leading edge
                 VStack(alignment: .leading) {
+                    
+                    // Built in divider
+                    // It is barely visible and not very customizeable
+                    // Divider()
+                    // So we will create a custom divider
+                    Rectangle()
+                        .frame(height: 2)
+                        .foregroundStyle(.lightBackground)
+                        .padding(.vertical)
+                    
                     Text("Mission Highlights")
                         .font(.title.bold())
                     // will cause this text to stay away
@@ -61,6 +73,20 @@ struct MissionView: View {
                     // in this case, the description
                         .padding(.bottom, 5)
                     Text(mission.description)
+                    
+                    // Here is that same as above
+                    // custom divider
+                    Rectangle()
+                        .frame(height: 2)
+                        .foregroundStyle(.lightBackground)
+                        .padding(.vertical)
+                    
+                    // Placing this title inside the VStack
+                    // will keep it neatly aligned with the
+                    // mission description text
+                    Text("Crew")
+                        .font(Font.title.bold())
+                        .padding(.bottom, 5)
                 }
                 // brings text in from the edges
                 // of the screen
@@ -69,17 +95,39 @@ struct MissionView: View {
                 // Here will show the astronauts
                 // that were on this mission
                 // We will not show the horizontal scroll bar
+                // This ScrollView for the astronauts
+                //  was placed AFTER the mission VSTACK
+                //  (not inside it) because Horizontal scroll views
+                //  work best when they start ndented from the edge,
+                //  but scroll fully edge to edge
+                //  they don't stay indented when you scroll
+                // This makes sure they don't have padding pushing the
+                //  the Horizontal ScrollView inside the view
+                // Doing so would clip the images as they scrolled off
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack {
+                        // remember crew is the array of all crew members
+                        //  (role and astronaut) for this mission
                         ForEach(crew, id: \.role) { CrewMember in
                             NavigationLink {
+                                // First Navigation Link trailing closure
+                                // The text in a Navigation Link is the
+                                // destination link, and thus is NOT shown
+                                // in this, the Mission View
                                 Text("Astronaut Details")
+                                // Second Navigation Link trailing closure
+                                // The label is what WILL be shown
+                                // in this, the Mission View
                             } label: {
                                 HStack {
                                     Image(CrewMember.astronaut.id)
                                         .resizable()
+                                    // the proportion of 104 and 72
+                                    // keep the correct scale of the
+                                    // original images
                                         .frame(width: 104, height: 72)
                                         .clipShape(.capsule)
+                                    // creates white border for image
                                         .overlay(Capsule()
                                             .strokeBorder(.white, lineWidth: 1)
                                         )
@@ -88,10 +136,12 @@ struct MissionView: View {
                                             .foregroundStyle(.white)
                                             .font(.headline)
                                         Text(CrewMember.role)
-                                            .foregroundStyle(.secondary)
+                                            // .foregroundStyle(.secondary)
+                                            .foregroundStyle(.white.opacity(0.5))
                                         
                                     }
                                 }
+                                // padding for HStack
                                 .padding(.horizontal)
                             }
                         }

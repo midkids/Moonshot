@@ -322,8 +322,14 @@ struct ContentView: View {
             ScrollView {
                 LazyVGrid(columns: columns) {
                     ForEach(missions) { mission in
+                        // Here we will point to our MissionView
+                        // with the correct mission
+                        // and pass in all the astronauts every time
+                        // the link is activated
                         NavigationLink {
-                            Text("Detail view")
+                            // Placeholder for now
+                            // Text("Detail view")
+                            MissionView(mission: mission, astronauts: astronauts )
                         } label: {
                             VStack {
                                 // keeps the correct aspect ratio
