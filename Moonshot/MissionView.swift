@@ -65,6 +65,39 @@ struct MissionView: View {
                 // brings text in from the edges
                 // of the screen
                 .padding(.horizontal)
+                
+                // Here will show the astronauts
+                // that were on this mission
+                // We will not show the horizontal scroll bar
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack {
+                        ForEach(crew, id: \.role) { CrewMember in
+                            NavigationLink {
+                                Text("Astronaut Details")
+                            } label: {
+                                HStack {
+                                    Image(CrewMember.astronaut.id)
+                                        .resizable()
+                                        .frame(width: 104, height: 72)
+                                        .clipShape(.capsule)
+                                        .overlay(Capsule()
+                                            .strokeBorder(.white, lineWidth: 1)
+                                        )
+                                    VStack(alignment: .leading) {
+                                        Text(CrewMember.astronaut.name)
+                                            .foregroundStyle(.white)
+                                            .font(.headline)
+                                        Text(CrewMember.role)
+                                            .foregroundStyle(.secondary)
+                                        
+                                    }
+                                }
+                                .padding(.horizontal)
+                            }
+                        }
+                    }
+                    
+                }
             }
             // to keep text away from the
             // bottom of the screen
