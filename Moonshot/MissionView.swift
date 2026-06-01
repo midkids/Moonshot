@@ -108,19 +108,20 @@ struct MissionView: View {
                     HStack {
                         // remember crew is the array of all crew members
                         //  (role and astronaut) for this mission
-                        ForEach(crew, id: \.role) { CrewMember in
+                        ForEach(crew, id: \.role) { crewMember in
                             NavigationLink {
                                 // First Navigation Link trailing closure
                                 // The text in a Navigation Link is the
                                 // destination link, and thus is NOT shown
                                 // in this, the Mission View
-                                Text("Astronaut Details")
+                                // Text("Astronaut Details")
                                 // Second Navigation Link trailing closure
                                 // The label is what WILL be shown
                                 // in this, the Mission View
+                                AstronautView(astronaut: crewMember.astronaut)
                             } label: {
                                 HStack {
-                                    Image(CrewMember.astronaut.id)
+                                    Image(crewMember.astronaut.id)
                                         .resizable()
                                     // the proportion of 104 and 72
                                     // keep the correct scale of the
@@ -132,10 +133,10 @@ struct MissionView: View {
                                             .strokeBorder(.white, lineWidth: 1)
                                         )
                                     VStack(alignment: .leading) {
-                                        Text(CrewMember.astronaut.name)
+                                        Text(crewMember.astronaut.name)
                                             .foregroundStyle(.white)
                                             .font(.headline)
-                                        Text(CrewMember.role)
+                                        Text(crewMember.role)
                                             // .foregroundStyle(.secondary)
                                             .foregroundStyle(.white.opacity(0.5))
                                         
