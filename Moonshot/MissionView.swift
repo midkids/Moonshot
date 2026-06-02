@@ -4,6 +4,10 @@
 //
 //  Created by Myron Snelson on 5/26/26.
 //
+// We will reach this detailed Mission View
+// from the Content View
+// This detailed view will slide in when invoked
+// SwiftUI generates back buttons for us
 // This view must have a size set from the parent
 
 import SwiftUI
@@ -114,11 +118,22 @@ struct MissionView: View {
                                 // The text in a Navigation Link is the
                                 // destination link, and thus is NOT shown
                                 // in this, the Mission View
+                                // This is just a placeholder
+                                //  until we create an AstronautView
                                 // Text("Astronaut Details")
+                                
+                                // We replace the placeholder with
+                                // invoking the new AstronautView
+                                // We are passing the astronaut object
+                                // to the Astronaut View
+                                AstronautView(astronaut: crewMember.astronaut)
+                                
                                 // Second Navigation Link trailing closure
                                 // The label is what WILL be shown
                                 // in this, the Mission View
-                                AstronautView(astronaut: crewMember.astronaut)
+                                // and the entire HStack will
+                                // serve as the linke to the
+                                // AstronautView
                             } label: {
                                 HStack {
                                     Image(crewMember.astronaut.id)
@@ -155,6 +170,10 @@ struct MissionView: View {
             .padding(.bottom)
         }
         .navigationTitle(mission.displayName)
+        // The inline parameter causes the title
+        // to be displayed in a smaller, compact style
+        // IMPORTANT: use the inline parameter for
+        //  detailed views
         .navigationBarTitleDisplayMode(.inline)
         .background(.darkBackground)
     }
@@ -197,10 +216,20 @@ struct MissionView: View {
 }
 
 #Preview {
+    // must supply data to the preview
     // load mission and astronauts from JSON files
     // and pass them into the MissionView
     let missions: [Mission] = Bundle.main.decode("missions.json")
     let astronauts: [String: Astronaut] = Bundle.main.decode("astronauts.json")
+    
+    /* The hard-coded astronaut missions[0]
+        is only used for the preview
+        The #Preview block is compiled and run only by Xcode’s preview
+        system to render a live preview in the canvas.
+     • Our app at runtime will create MissionView instances using real data passed from the parent view (e.g., when navigating from a mission list), not from this preview code.
+    • Therefore, the hard-coded missions[0] key affects only what you see in the preview canvas and does not impact the app’s behavior when it runs on a device or simulator.
+     */
+    
     return MissionView(mission: missions[0], astronauts: astronauts)
     // Only need preferred color scheme for views other than main
     // We specified it there in the Navigation Stack
