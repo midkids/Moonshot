@@ -329,7 +329,7 @@ struct ContentView: View {
                         NavigationLink {
                             // Placeholder for now
                             // Text("Detail view")
-                            MissionView(mission: mission, astronauts: astronauts )
+                            MissionView(mission: mission, astronauts: astronauts)
                         } label: {
                             VStack {
                                 // keeps the correct aspect ratio

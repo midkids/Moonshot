@@ -54,6 +54,9 @@ struct MissionView: View {
                     .containerRelativeFrame(.horizontal) {
                         containerWidth,axis in containerWidth * 0.6
                 }
+                 Text(mission.formattedLaunchDate)
+                    .font(.caption)
+                    .foregroundStyle(.white.opacity(0.7))
                 
                 
                 // The text Mission Highlights
@@ -230,7 +233,7 @@ struct MissionView: View {
     • Therefore, the hard-coded missions[0] key affects only what you see in the preview canvas and does not impact the app’s behavior when it runs on a device or simulator.
      */
     
-    return MissionView(mission: missions[0], astronauts: astronauts)
+    return MissionView(mission: missions[1], astronauts: astronauts)
     // Only need preferred color scheme for views other than main
     // We specified it there in the Navigation Stack
     // This preview is not inside that parent
