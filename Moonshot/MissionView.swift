@@ -29,6 +29,7 @@ struct MissionView: View {
         // description of astronaut
         let astronaut: Astronaut
     }
+    
     let mission: Mission
     // An array of our CrewMember objects
     // It will be fully resolved,
@@ -99,74 +100,7 @@ struct MissionView: View {
                 // of the screen
                 .padding(.horizontal)
                 
-                // Here will show the astronauts
-                // that were on this mission
-                // We will not show the horizontal scroll bar
-                // This ScrollView for the astronauts
-                //  was placed AFTER the mission VSTACK
-                //  (not inside it) because Horizontal scroll views
-                //  work best when they start ndented from the edge,
-                //  but scroll fully edge to edge
-                //  they don't stay indented when you scroll
-                // This makes sure they don't have padding pushing the
-                //  the Horizontal ScrollView inside the view
-                // Doing so would clip the images as they scrolled off
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack {
-                        // remember crew is the array of all crew members
-                        //  (role and astronaut) for this mission
-                        ForEach(crew, id: \.role) { crewMember in
-                            NavigationLink {
-                                // First Navigation Link trailing closure
-                                // The text in a Navigation Link is the
-                                // destination link, and thus is NOT shown
-                                // in this, the Mission View
-                                // This is just a placeholder
-                                //  until we create an AstronautView
-                                // Text("Astronaut Details")
-                                
-                                // We replace the placeholder with
-                                // invoking the new AstronautView
-                                // We are passing the astronaut object
-                                // to the Astronaut View
-                                AstronautView(astronaut: crewMember.astronaut)
-                                
-                                // Second Navigation Link trailing closure
-                                // The label is what WILL be shown
-                                // in this, the Mission View
-                                // and the entire HStack will
-                                // serve as the linke to the
-                                // AstronautView
-                            } label: {
-                                HStack {
-                                    Image(crewMember.astronaut.id)
-                                        .resizable()
-                                    // the proportion of 104 and 72
-                                    // keep the correct scale of the
-                                    // original images
-                                        .frame(width: 104, height: 72)
-                                        .clipShape(.capsule)
-                                    // creates white border for image
-                                        .overlay(Capsule()
-                                            .strokeBorder(.white, lineWidth: 1)
-                                        )
-                                    VStack(alignment: .leading) {
-                                        Text(crewMember.astronaut.name)
-                                            .foregroundStyle(.white)
-                                            .font(.headline)
-                                        Text(crewMember.role)
-                                            // .foregroundStyle(.secondary)
-                                            .foregroundStyle(.white.opacity(0.5))
-                                        
-                                    }
-                                }
-                                // padding for HStack
-                                .padding(.horizontal)
-                            }
-                        }
-                    }
-                    
-                }
+                CrewView(crew: crew)
             }
             // to keep text away from the
             // bottom of the screen
