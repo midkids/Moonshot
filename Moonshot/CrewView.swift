@@ -59,12 +59,20 @@ struct CrewView: View {
     // Minimal preview using sample data if available
     let missions: [Mission] = Bundle.main.decode("missions.json")
     let astronauts: [String: Astronaut] = Bundle.main.decode("astronauts.json")
+    // Here we hard code the mission to make preview work
     let mission = missions[1]
     let crew: [MissionView.CrewMember] = mission.crew.compactMap { member in
         if let astro = astronauts[member.name] {
             return MissionView.CrewMember(role: member.role, astronaut: astro)
         } else { return nil }
     }
+    // return CrewView(crew: crew)
+    //    .preferredColorScheme(.dark)
+    // If we return a Navigation Stack instead of
+    // the CrewView, we can navigate to the Astronaut View
+    // in the preview view
+    // Otherwise, the CrewView would look the same
+    // in the preview using the hardcoded mission[1] crew
     return NavigationStack { CrewView(crew: crew) }
         .preferredColorScheme(.dark)
 }

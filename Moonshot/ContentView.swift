@@ -327,8 +327,10 @@ struct ContentView: View {
                         // and pass in all the astronauts every time
                         // the link is activated
                         NavigationLink {
-                            // Placeholder for now
+                            // Initial placeholder code
                             // Text("Detail view")
+                            
+                            // Actual link to MissionView
                             MissionView(mission: mission, astronauts: astronauts)
                         } label: {
                             VStack {
@@ -382,6 +384,8 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView()
+    NavigationStack {
+        ContentView()
+    }
 }
 
