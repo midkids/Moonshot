@@ -9,16 +9,29 @@ import SwiftUI
 
 struct CrewView: View {
     // Use nested type MissionView.CrewMember again
+    // This data will be passed to this view
+    // from the MissionView and will be an array
+    // of just the crew members for the mission
+    // being displyed in MissionView
     let crew: [MissionView.CrewMember]
 
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack {
+                // The role is unique for a given mission
                 ForEach(crew, id: \.role) { crewMember in
+                    // The first trailing closure is the
+                    // destination (what you navigate to).
+                    // Here, you pass the tapped
+                    // crewMember.astronaut into AstronautView.
                     NavigationLink {
                         AstronautView(astronaut: crewMember.astronaut)
+                        // The label closure defines what’s visible
+                        // in the current view — your custom row UI.
                     } label: {
                         HStack {
+                            // Images stored in Xcassets with
+                            // a key of astronaut id (name)
                             Image(crewMember.astronaut.id)
                                 .resizable()
                                 .frame(width: 104, height: 72)

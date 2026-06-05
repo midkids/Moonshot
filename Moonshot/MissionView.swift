@@ -100,6 +100,11 @@ struct MissionView: View {
                 // of the screen
                 .padding(.horizontal)
                 
+                // The ScrollView that was here
+                // was removed and placed in a separate
+                // view called CrewView.
+                // IMPORTANT: This is how to call
+                // another view and pass it data
                 CrewView(crew: crew)
             }
             // to keep text away from the
